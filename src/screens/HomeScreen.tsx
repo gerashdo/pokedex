@@ -10,7 +10,11 @@ interface Props extends StackScreenProps<any,any>{}
 export const HomeScreen = ({ navigation }:Props) => {
     const { top } = useSafeAreaInsets()
 
-    usePokemonPaginated()
+    const {isLoading, simplePokemonList } = usePokemonPaginated()
+
+    console.log( simplePokemonList );
+    
+    
     return (
         <>
             <Image 
