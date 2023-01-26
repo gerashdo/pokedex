@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from '../theme/appTheme';
 import { usePokemonPaginated } from '../hooks/usePokemonPaginated';
 import { FadeInImage } from '../components/FadeInImage';
+import { PokemonCard } from '../components/PokemonCard';
 
 interface Props extends StackScreenProps<any,any>{}
 
@@ -29,31 +30,33 @@ export const HomeScreen = ({ navigation }:Props) => {
                     width: 300,
                 }}
             />
-            {/* <Text style={{ 
-                ...styles.title,
-                ...styles.globalMargin,
-                marginTop: top + 20
-            }}>Pokedex</Text> */}
-            <FlatList 
-                data={ simplePokemonList }
-                keyExtractor={ (item) => item.id }
-                renderItem={ ({ item }) => 
-                    <FadeInImage 
-                        uri={ item.picture }
-                        style={{ height: 100, width: 100 }}
-                    />
-                }
-                onEndReached={ () => loadPokemos() }
-                onEndReachedThreshold={ 0.4 }
-                ListFooterComponent={ () => <ActivityIndicator 
-                    size={ 30 }
-                    color="gray"
-                    style={{
-                        marginVertical: 40,
-                    }}
-                />}
-                showsVerticalScrollIndicator={ false }
-            />
+            
+            <View style={{ alignItems: 'center' }}>
+                <FlatList 
+                    data={ simplePokemonList }
+                    keyExtractor={ (item) => item.id }
+                    renderItem={ ({ item }) => <PokemonCard pokemon={ item }/>}
+                    ListHeaderComponent={(
+                        <Text style={{ 
+                            ...styles.title,
+                            ...styles.globalMargin,
+                            marginTop: top + 20,
+                            marginBottom: 10,
+                        }}>Pokedex</Text>
+                    )}
+                    onEndReached={ () => loadPokemos() }
+                    onEndReachedThreshold={ 0.4 }
+                    ListFooterComponent={ () => <ActivityIndicator 
+                        size={ 30 }
+                        color="gray"
+                        style={{
+                            marginVertical: 40,
+                        }}
+                    />}
+                    showsVerticalScrollIndicator={ false }
+                    numColumns={ 2 }
+                />
+            </View>
         </>
     )
 }
