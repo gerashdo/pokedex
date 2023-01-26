@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Dimensions, Image, StyleSheet } from 'react-native';
 import { Text, TouchableOpacity, View } from 'react-native'
 
@@ -16,9 +16,12 @@ const windowWidth = Dimensions.get('window').width
 export const PokemonCard = ({ pokemon }:Props ) => {
 
     const [ bgColor, setBgColor ] = useState('gray')
+    const isMounted = useRef( true )
 
     const getPictureColors = async() => {
         const result = await ImageColors.getColors( pokemon.picture )
+
+        if( !isMounted ) return
 
         if( result.platform === 'android' ){
             setBgColor( result.dominant || 'gray' )
@@ -30,9 +33,9 @@ export const PokemonCard = ({ pokemon }:Props ) => {
     useEffect(() => {
       getPictureColors()
     
-    //   return () => {
-    //     second
-    //   }
+      return () => {
+        isMounted.current = false
+      }
     }, [])
     
 
