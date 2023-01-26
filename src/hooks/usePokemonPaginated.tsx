@@ -6,7 +6,7 @@ import { PokemonPaginatedResponse, PokemonResult, SimplePokemon } from '../inter
 
 export const usePokemonPaginated = () => {
     
-    const nextUrl = useRef('https://pokeapi.co/api/v2/pokemon?limit=20')
+    const nextUrl = useRef('https://pokeapi.co/api/v2/pokemon?limit=40')
     const [ isLoading, setIsLoading ] = useState( true )
     const [ simplePokemonList, setSimplePokemonList ] = useState<SimplePokemon[]>([])
 
@@ -17,7 +17,7 @@ export const usePokemonPaginated = () => {
         nextUrl.current = data.next
 
         const newPokemonList = mapPokemonResponseToSimplePokemon( data.results )
-        setSimplePokemonList( newPokemonList )
+        setSimplePokemonList([ ...simplePokemonList, ...newPokemonList ])
 
         setIsLoading( false )
     }
@@ -43,5 +43,6 @@ export const usePokemonPaginated = () => {
     return {
         simplePokemonList,
         isLoading,
+        loadPokemos,
     }
 }
