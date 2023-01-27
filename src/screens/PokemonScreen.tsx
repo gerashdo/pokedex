@@ -1,12 +1,14 @@
 import React from 'react'
 import { StackScreenProps } from '@react-navigation/stack'
-import { Text, View, TouchableOpacity, Image } from 'react-native';
+import { Text, View, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { RootStackParams } from '../navigation/Navigation'
 import { StyleSheet } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { styles } from '../theme/appTheme'
 import { FadeInImage } from '../components/FadeInImage';
+import { usePokemon } from '../hooks/usePokemon';
+import { PokemonDetails } from '../components/PokemonDetails';
 
 interface Props extends StackScreenProps<RootStackParams, 'PokemonScreen'>{}
 
@@ -14,10 +16,18 @@ export const PokemonScreen = ({ route, navigation }:Props) => {
   const { top } = useSafeAreaInsets()
   const { simplePokemon, color } = route.params
   const { name, id, picture } = simplePokemon
+  const { pokemon, isLoading } = usePokemon( simplePokemon.id )
+
   return (
-    <View>
+    <View
+      style={{ flex: 1 }}
+    >
         <View
-          style={{ ...localStyles.colorContainer, backgroundColor: color }}
+          style={{ 
+            ...localStyles.colorContainer, 
+            backgroundColor: color,
+            zIndex: 999,
+          }}
         >
           <View style={{ 
             ...styles.globalMargin,
@@ -64,6 +74,15 @@ export const PokemonScreen = ({ route, navigation }:Props) => {
           /> 
 
         </View>
+
+        {
+          isLoading
+          ? (
+            <View style={ localStyles.loadingIndicator }>
+              <ActivityIndicator size={ 40 } color={ color }/>
+            </View>
+          ): <PokemonDetails pokemon={ pokemon }/>
+        }
     </View>
   )
 }
@@ -99,6 +118,10 @@ const localStyles = StyleSheet.create({
   pokemonPicture:{
     height: 250,
     width: 250,
-    bottom: -10,
+  },
+  loadingIndicator:{
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
   }
 })
