@@ -1,3 +1,5 @@
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 import React, { useEffect, useRef, useState } from 'react'
 import { Dimensions, Image, StyleSheet } from 'react-native';
 import { Text, TouchableOpacity, View } from 'react-native'
@@ -6,6 +8,7 @@ import ImageColors from 'react-native-image-colors'
 
 import { SimplePokemon } from '../interfaces/pokemonInterface'
 import { FadeInImage } from './FadeInImage';
+import { RootStackParams } from '../navigation/Navigation';
 
 interface Props {
     pokemon: SimplePokemon;
@@ -14,6 +17,8 @@ interface Props {
 const windowWidth = Dimensions.get('window').width
 
 export const PokemonCard = ({ pokemon }:Props ) => {
+
+    const navigation = useNavigation<StackNavigationProp<RootStackParams>>()
 
     const [ bgColor, setBgColor ] = useState('gray')
     const isMounted = useRef( true )
@@ -42,6 +47,7 @@ export const PokemonCard = ({ pokemon }:Props ) => {
     return (
         <TouchableOpacity
             activeOpacity={ 0.95 }
+            onPress={ () => navigation.navigate('PokemonScreen', { 'simplePokemon': pokemon, 'color': bgColor })}
         >
             <View style={{ ...styles.cardContainer, backgroundColor: bgColor }}>
                 <Text style={ styles.name }>{ pokemon.name }</Text>
