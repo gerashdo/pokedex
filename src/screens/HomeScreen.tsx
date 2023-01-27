@@ -4,7 +4,6 @@ import { StackScreenProps } from '@react-navigation/stack'
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { styles } from '../theme/appTheme';
 import { usePokemonPaginated } from '../hooks/usePokemonPaginated';
-import { FadeInImage } from '../components/FadeInImage';
 import { PokemonCard } from '../components/PokemonCard';
 
 interface Props extends StackScreenProps<any,any>{}
@@ -13,9 +12,6 @@ export const HomeScreen = ({ navigation }:Props) => {
     const { top } = useSafeAreaInsets()
 
     const { isLoading, simplePokemonList, loadPokemos } = usePokemonPaginated()
-
-    console.log( simplePokemonList );
-    
     
     return (
         <>
