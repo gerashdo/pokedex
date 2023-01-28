@@ -23,12 +23,20 @@ export const SearchScreen = () => {
         return setFilteredPokemons([])
       }
 
-      setFilteredPokemons(
-        simplePokemonList.filter( 
-            poke => poke.name.toLocaleLowerCase()
-                .includes( searchTerm.toLocaleLowerCase() )
+      if( isNaN( Number( searchTerm) ) ){
+          setFilteredPokemons(
+            simplePokemonList.filter( 
+                poke => poke.name.toLocaleLowerCase()
+                    .includes( searchTerm.toLocaleLowerCase() )
+            )
+          )
+      }else{
+        const pokemonById = simplePokemonList.find( poke => poke.id === searchTerm )
+        setFilteredPokemons(
+            pokemonById ? [ pokemonById ] : []
         )
-      )
+      }
+
     }, [ searchTerm ])
     
 
