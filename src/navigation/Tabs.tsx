@@ -15,7 +15,7 @@ export const Tabs = () => {
                 headerShown: false,
                 tabBarStyle:{
                     position: 'absolute',
-                    backgroundColor: 'rgba(255,255,255,0.92)',
+                    backgroundColor: 'rgba(255,255,255,0.96)',
                     borderWidth: 0,
                     elevation: 0,
                     height: ( Platform.OS === 'android' ) ? 60 : 80, 
