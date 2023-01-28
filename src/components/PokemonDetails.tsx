@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, StyleSheet, Text, View } from 'react-native'
+import { Platform, ScrollView, StyleSheet, Text, View } from 'react-native'
 import { FullPokemon } from '../interfaces/pokemonInterface'
 import { FadeInImage } from './FadeInImage';
 
@@ -165,7 +165,7 @@ export const PokemonDetails = ({ pokemon }:Props) => {
             {/* Moves */}
             <View style={{
                 ...styles.globalMargin,
-                marginBottom: 50,
+                marginBottom: ( Platform.OS === 'ios' ) ? 95 : 75,
             }}>
                 <Text style={{
                     ...styles.title,

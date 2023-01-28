@@ -114,6 +114,7 @@ const localStyles = StyleSheet.create({
     width: 250,
     position: 'absolute',
     bottom: 10,
+    opacity: 0.3,
   },
   pokemonPicture:{
     height: 250,
